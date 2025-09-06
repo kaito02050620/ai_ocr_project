@@ -10,4 +10,4 @@
 - java              APIプログラム
 - python            機械学習
 - postgresql        データベース
-- React×typescript  操作画面 
+- React×typescript  操作画面
