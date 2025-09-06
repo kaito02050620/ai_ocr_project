@@ -3,8 +3,8 @@
 set -e
 
 BUILD_SRC="/app/src/html/index.html"
-REMOVE_PATH="/opt/tomcat/webapps"
-DEPLOY_PATH="/opt/tomcat/webapps/ROOT"
+REMOVE_PATH="/app/tomcat/webapps"
+DEPLOY_PATH="/app/tomcat/webapps/ROOT"
 
 echo "===================== stop tomcat ====================="
 catalina.sh stop
@@ -22,5 +22,4 @@ mkdir -p "$DEPLOY_PATH"
 cp -r "$BUILD_SRC" "$DEPLOY_PATH" || { echo "Failed to copy build files"; exit 1; }
 
 echo "===================== start tomcat ====================="
-mkdir -p "/app/logs"
 catalina.sh start || { echo "Failed to start Tomcat"; exit 1; }

@@ -1,5 +1,5 @@
 # サーバ起動方法
-- tomcat catalina.sh run 
+- tomcat catalina.sh start
 - buildファイル格納先 usr/local/tomcat/webapps/ROOT
 
 # ビルド方法
