@@ -1,13 +1,16 @@
 # AI OCR プロジェクト
 
-## 要件定義
-- 画像、動画にある文字から文字を検出して簡単に翻訳したい　（手書き、多言語対応）
-  ※イメージ的にはインプットデータから指定する言語の読める文字に変換して返す
+## 概要
 
-### 技術選定 ※いずれもdockerで環境構築を行う。
-- Apache            プロキシ　※将来的に取り込む
-- tomcat            サーブレットコンテナ
-- java              APIプログラム
-- python            機械学習
-- postgresql        データベース
-- React×typescript  操作画面
+- 画像や動画に含まれる文字を検出し、翻訳を行うシステム。  
+- 手書き文字や多言語にも対応予定。
+
+## 技術選定
+
+  ![Apache](https://img.shields.io/badge/Apache-D22128?logo=apache&logoColor=white)
+  ![Tomcat](https://img.shields.io/badge/Tomcat-F8DC75?logo=apachetomcat&logoColor=black)
+  ![Java](https://img.shields.io/badge/Java-007396?logo=openjdk&logoColor=white)
+  ![Python](https://img.shields.io/badge/Python-3776AB?logo=python&logoColor=white)
+  ![PostgreSQL](https://img.shields.io/badge/PostgreSQL-4169E1?logo=postgresql&logoColor=white)
+  ![React](https://img.shields.io/badge/React-20232A?logo=react&logoColor=61DAFB)
+  ![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?logo=typescript&logoColor=white)
