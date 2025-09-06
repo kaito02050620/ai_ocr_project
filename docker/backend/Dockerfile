@@ -15,6 +15,7 @@ RUN apt-get update && \
         curl && \
     apt-get clean && rm -rf /var/lib/apt/lists/*
 
+# tomcatダウンロード
 RUN wget https://archive.apache.org/dist/tomcat/tomcat-11/v11.0.9/bin/apache-tomcat-11.0.9.tar.gz \
     && tar -xzf apache-tomcat-11.0.9.tar.gz \
     && mv apache-tomcat-11.0.9 /opt/tomcat \
@@ -25,14 +26,14 @@ RUN wget https://services.gradle.org/distributions/gradle-9.1.0-rc-2-bin.zip -P 
 unzip -d /opt/gradle /tmp/gradle-9.1.0-rc-2-bin.zip && \
 ln -s /opt/gradle/gradle-9.1.0-rc-2/bin/gradle /usr/bin/gradle
     
-RUN mkdir -p /app/logs /app/build /app/python
+RUN mkdir -p /app/python /app/logs
 
 ENV TZ=Asia/Tokyo
 ENV PYTHONPATH=/app/python
-ENV JAVA_HOME=/usr/local/openjdk-26
-ENV PATH=/opt/tomcat/bin:$PATH
+ENV JAVA_HOME=/opt/java/openjdk
+ENV PATH=$JAVA_HOME/bin:/opt/tomcat/bin:$PATH
 
 # Tomcat の自動デプロイ設定 削除しないとtomcatの初期画面が出る。
-RUN rm -rf /usr/local/tomcat/webapps/*
+RUN rm -rf /opt/tomcat/tomcat/webapps/*
 
 CMD ["/bin/bash"]
