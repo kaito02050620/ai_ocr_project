@@ -33,8 +33,10 @@ services:
       - project-network
 
   adminer:
-    image: adminer:4.17.1-standalone
+    image: adminer:5.3.0-standalone
     container_name: adminer
+    environment:
+      - ADMINER_DESIGN=pepa-linha # https://www.adminer.org/en/#extras:~:text=set%2C%205.%20Size.-,Alternative%20designs,-hever
     ports:
       - ${ADMINER_PORT}:8080
     depends_on:
