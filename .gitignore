@@ -1,3 +1,5 @@
 /.env
 backend/logs/
 backend/webapps/
+backend/api/.gradle/
+backend/api/build/

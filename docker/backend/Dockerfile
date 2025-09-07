@@ -16,10 +16,10 @@ RUN apt-get update && \
     apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # tomcatダウンロード
-RUN wget https://archive.apache.org/dist/tomcat/tomcat-11/v11.0.9/bin/apache-tomcat-11.0.9.tar.gz \
-    && tar -xzf apache-tomcat-11.0.9.tar.gz \
-    && mv apache-tomcat-11.0.9 /app/tomcat \
-    && rm apache-tomcat-11.0.9.tar.gz
+RUN wget https://archive.apache.org/dist/tomcat/tomcat-10/v10.1.9/bin/apache-tomcat-10.1.9.tar.gz \
+    && tar -xzf apache-tomcat-10.1.9.tar.gz \
+    && mv apache-tomcat-10.1.9 /app/tomcat \
+    && rm apache-tomcat-10.1.9.tar.gz
 
 # buildツールをダウンロード（gradle）
 RUN wget https://services.gradle.org/distributions/gradle-9.1.0-rc-2-bin.zip -P /tmp && \
