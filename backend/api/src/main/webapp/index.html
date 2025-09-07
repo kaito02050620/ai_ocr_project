@@ -1,0 +1,238 @@
+<!doctype html>
+<html lang="ja" data-theme="synthwave">
+
+<head>
+  <meta charset="utf-8" />
+  <link rel="icon" href="./assets/favicon.ico" type="image/x-icon" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>AI OCR Demo</title>
+  <link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" type="text/css" />
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  <link href="https://cdn.jsdelivr.net/npm/daisyui@5/themes.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body class="min-h-screen flex flex-col">
+
+  <!-- ヘッダー -->
+  <header class="navbar bg-base-100 shadow-lg">
+    <div class="flex-1">
+      <a class="btn btn-ghost text-xl">AI OCR Demo</a>
+    </div>
+    <div class="flex-none">
+      <ul class="menu menu-horizontal px-1">
+        <li><a>ホーム</a></li>
+        <li><a>使い方</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <!-- メインコンテナ -->
+  <main class="flex-1 container mx-auto px-4 py-8">
+    <div class="max-w-4xl mx-auto">
+
+      <!-- タイトル＋概要 -->
+      <div class="text-center mb-8">
+        <h1 class="text-4xl font-bold mb-4">AI OCR 文字認識</h1>
+        <p class="text-lg opacity-70">画像をアップロードして、AIが文字を認識し、選択した言語で出力します</p>
+      </div>
+
+      <!-- メインコンテンツ -->
+      <div class="card bg-base-100 shadow-xl">
+        <div class="card-body">
+
+          <!-- 画像アップロード -->
+          <div class="form-control w-full mb-6">
+            <label class="label">
+              <span class="label-text text-lg font-semibold">画像をアップロード</span>
+            </label>
+            <input type="file" id="imageInput" accept="image/*"
+              class="file-input file-input-bordered file-input-primary w-full" />
+          </div>
+
+          <!-- 画像プレビュー -->
+          <div class="mb-6">
+            <div id="imagePreview" class="hidden">
+              <label class="label">
+                <span class="label-text text-lg font-semibold">アップロードされた画像</span>
+              </label>
+              <div class="border-2 border-dashed border-base-300 rounded-lg p-4 text-center">
+                <img id="previewImg" class="max-w-full max-h-96 mx-auto rounded-lg shadow-md" alt="プレビュー画像">
+              </div>
+            </div>
+            <div id="imagePlaceholder"
+              class="border-2 border-dashed border-base-300 rounded-lg p-8 text-center opacity-50">
+              <svg class="w-16 h-16 mx-auto mb-4 opacity-30" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd"
+                  d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z"
+                  clip-rule="evenodd"></path>
+              </svg>
+              <p class="text-sm">画像がここに表示されます</p>
+            </div>
+          </div>
+
+          <!-- 出力言語選択 -->
+          <div class="form-control w-full mb-6">
+            <label class="label">
+              <span class="label-text text-lg font-semibold">出力言語</span>
+            </label>
+            <select class="select select-bordered select-primary w-full" id="languageSelect">
+              <option value="ja">日本語</option>
+              <option value="en">English</option>
+              <!-- <option value="zh">中文 (中国語)</option>
+              <option value="ko">한국어 (韓国語)</option>
+              <option value="es">Español (スペイン語)</option>
+              <option value="fr">Français (フランス語)</option>
+              <option value="de">Deutsch (ドイツ語)</option>
+              <option value="it">Italiano (イタリア語)</option>
+              <option value="ru">Русский (ロシア語)</option>
+              <option value="ar">العربية (アラビア語)</option> -->
+            </select>
+          </div>
+
+          <!-- OCR処理開始 -->
+          <div class="card-actions justify-center">
+            <button class="btn btn-primary btn-lg w-64 rounded-full" id="processButton" disabled>
+              <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path>
+              </svg>
+              OCR処理を開始
+            </button>
+          </div>
+
+          <!-- ステータス表示 -->
+          <div id="processingStatus" class="hidden mt-4">
+            <div class="alert alert-info">
+              <span class="loading loading-spinner loading-sm"></span>
+              処理中です...しばらくお待ちください
+            </div>
+          </div>
+
+          <!-- 出力結果表示 -->
+          <div id="resultsSection" class="hidden mt-6">
+            <div class="divider"></div>
+            <label class="label">
+              <span class="label-text text-lg font-semibold">認識結果</span>
+            </label>
+            <textarea id="resultsText" class="textarea textarea-bordered h-32 w-full" readonly
+              placeholder="認識された文字がここに表示されます"></textarea>
+            <div class="mt-4 flex gap-2">
+              <button class="btn btn-outline btn-sm" id="copyButton">
+                <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z">
+                  </path>
+                </svg>
+                コピー
+              </button>
+              <button class="btn btn-outline btn-sm" id="downloadButton">
+                <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z">
+                  </path>
+                </svg>
+                ダウンロード
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- フッター -->
+  <footer class="footer footer-center p-5 bg-base-200 text-base-content rounded">
+    <aside>
+      <p>AI OCR Demo.</p>
+    </aside>
+  </footer>
+
+  <script>
+    const imageInput = document.getElementById('imageInput');
+    const imagePreview = document.getElementById('imagePreview');
+    const imagePlaceholder = document.getElementById('imagePlaceholder');
+    const previewImg = document.getElementById('previewImg');
+    const processButton = document.getElementById('processButton');
+    const processingStatus = document.getElementById('processingStatus');
+    const resultsSection = document.getElementById('resultsSection');
+    const resultsText = document.getElementById('resultsText');
+    const copyButton = document.getElementById('copyButton');
+    const downloadButton = document.getElementById('downloadButton');
+    const languageSelect = document.getElementById('languageSelect');
+
+    // 画像アップロード
+    imageInput.addEventListener('change', function (e) {
+      const file = e.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function (e) {
+          previewImg.src = e.target.result;
+          imagePreview.classList.remove('hidden');
+          imagePlaceholder.classList.add('hidden');
+          processButton.disabled = false;
+        };
+        reader.readAsDataURL(file);
+      }
+    });
+
+    // OCR処理ボタンクリック
+    processButton.addEventListener('click', function () {
+      if (!imageInput.files[0]) {
+        alert('画像を選択してください。');
+        return;
+      }
+
+      processingStatus.classList.remove('hidden');
+      processButton.disabled = true;
+      resultsSection.classList.add('hidden');
+
+      console.log("testtest")
+      fetch('http://localhost:8082/ocr', {
+        method: 'GET',
+        headers: { 'Content-Type': 'application/json' },
+        // body: JSON.stringify({ message: 'Hello from client' })
+      })
+        .then(res => res.json())
+        .then(data => console.log(data));
+
+
+      setTimeout(() => {
+        const selectedLanguage = languageSelect.value;
+        const mockResult = `OCR処理が完了しました。\n選択言語: ${languageSelect.options[languageSelect.selectedIndex].text}\n\nこちらは模擬の認識結果です。実際のOCR APIを統合してください。\n\nサンプルテキスト：\n- 文字認識の精度が向上しました\n- 多言語対応\n- 高速処理`;
+
+        resultsText.value = mockResult;
+        processingStatus.classList.add('hidden');
+        resultsSection.classList.remove('hidden');
+        processButton.disabled = false;
+      }, 2000);
+    });
+
+    // 出力結果コピーボタン
+    copyButton.addEventListener('click', function () {
+      resultsText.select();
+      document.execCommand('copy');
+
+      const originalText = copyButton.innerHTML;
+      copyButton.innerHTML = '<span class="text-success">コピー完了!</span>';
+      setTimeout(() => {
+        copyButton.innerHTML = originalText;
+      }, 2000);
+    });
+
+    // ダウンロードボタン
+    downloadButton.addEventListener('click', function () {
+      const text = resultsText.value;
+      const blob = new Blob([text], { type: 'text/plain' });
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `ocr-result-${new Date().getTime()}.txt`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      window.URL.revokeObjectURL(url);
+    });
+  </script>
+</body>
+
+</html>
