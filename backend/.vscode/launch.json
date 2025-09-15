@@ -1,0 +1,12 @@
+{
+    "configurations": [
+        {
+            "name": "upload_image_ocr_inference(アップロードOCR)",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${file}",
+            "console": "integratedTerminal",
+            "python": "/app/machine_learning/venv/ocr_venv/bin/python3"
+        }
+    ]
+}

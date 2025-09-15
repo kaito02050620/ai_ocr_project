@@ -1,0 +1,6 @@
+torch
+torchvision
+torchaudio
+easyocr
+pillow
+opencv-python
