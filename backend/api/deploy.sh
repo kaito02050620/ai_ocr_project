@@ -6,7 +6,7 @@ BUILD_SRC="/app/api/build/libs/ROOT.war"
 DEPLOY_PATH="/app/tomcat/webapps"
 
 # echo "===================== stop tomcat ====================="
-catalina.sh stop
+./stop_tomcat.sh
 
 
 # echo "===================== build java ====================="
@@ -23,4 +23,4 @@ cp -r "$BUILD_SRC" "$DEPLOY_PATH" || { echo "Failed to copy build files"; exit 1
 
 
 # echo "===================== start tomcat ====================="
-catalina.sh start || { echo "Failed to start Tomcat"; exit 1; }
+./start_tomcat.sh || { echo "Failed to start Tomcat"; exit 1; }

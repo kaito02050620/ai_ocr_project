@@ -18,6 +18,12 @@ services:
       - postgresql
     networks:
       - project-network
+    deploy:
+      resources:
+        limits:
+          memory: 16G 
+        reservations:
+          memory: 8G
 
   postgresql:
     image:  postgres:17.6
