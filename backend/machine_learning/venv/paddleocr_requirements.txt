@@ -1,0 +1,8 @@
+paddleocr
+# paddlex==2.1.0
+# paddlepaddle-gpu==2.6.1
+pillow
+opencv-python
+
+
+#  pip install paddlepaddle-gpu==3.2.0 -i https://www.paddlepaddle.org.cn/packages/stable/cu129/

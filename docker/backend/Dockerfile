@@ -14,10 +14,14 @@ RUN apt-get update && \
         git \
         vim \
         nano \
+        libopencv-dev \
+        nvidia-cuda-toolkit \
+        libnvidia-compute-575 \
+        fonts-noto-cjk \
+        fonts-noto-cjk-extra \
         curl && \
     apt-get clean && rm -rf /var/lib/apt/lists/*
 
-    # https://qiita.com/siruku6/items/b8aae4cdbf6ebc0dc5d6
 
 # tomcatダウンロード
 RUN wget https://downloads.apache.org/tomcat/tomcat-9/v9.0.109/bin/apache-tomcat-9.0.109.tar.gz \
@@ -30,7 +34,7 @@ RUN wget https://services.gradle.org/distributions/gradle-9.1.0-rc-2-bin.zip -P 
 unzip -d /opt/gradle /tmp/gradle-9.1.0-rc-2-bin.zip && \
 ln -s /opt/gradle/gradle-9.1.0-rc-2/bin/gradle /usr/bin/gradle
     
-RUN mkdir -p /app/python
+RUN fc-cache -fv
 
 ENV TZ=Asia/Tokyo
 ENV PYTHONPATH=/app/python

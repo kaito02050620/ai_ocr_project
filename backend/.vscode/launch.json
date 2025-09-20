@@ -1,12 +1,20 @@
 {
     "configurations": [
         {
-            "name": "upload_image_ocr_inference(アップロードOCR)",
+            "name": "easyocr",
             "type": "debugpy",
             "request": "launch",
             "program": "${file}",
             "console": "integratedTerminal",
-            "python": "/app/machine_learning/venv/ocr_venv/bin/python3"
-        }
+            "python": "/app/machine_learning/venv/easyocr_venv/bin/python3"
+        },
+        {
+            "name": "paddleocr",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${file}",
+            "console": "integratedTerminal",
+            "python": "/app/machine_learning/venv/paddleocr_venv/bin/python3"
+        },
     ]
 }
