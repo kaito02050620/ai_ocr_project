@@ -3,7 +3,9 @@ backend/logs/
 backend/webapps/
 backend/api/.gradle/
 backend/api/build/
-backend/machine_learning/venv/ocr_venv
+backend/machine_learning/venv/easyocr_venv
+backend/machine_learning/venv/paddleocr_venv
 backend/machine_learning/out/ocr
 backend/machine_learning/out/segmentation
 backend/machine_learning/test
+backend/machine_learning/output

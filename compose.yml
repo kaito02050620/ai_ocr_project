@@ -20,10 +20,17 @@ services:
       - project-network
     deploy:
       resources:
-        limits:
-          memory: 16G 
+        # limits:
+        #   memory: 12G
+        #   cpus: '4.0'
         reservations:
-          memory: 8G
+          # memory: 4G
+          # cpus: '2.0'
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+
 
   postgresql:
     image:  postgres:17.6
